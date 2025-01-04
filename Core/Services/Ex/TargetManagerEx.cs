@@ -84,4 +84,26 @@ public class TargetManagerEx
             DalamudContext.PluginLog.Error(ex, "Failed to open plate window.");
         }
     }
+
+    /// <summary>
+    /// Examines the specified object ID.
+    /// </summary>
+    /// <param name="objectId">The object ID to examine.</param>
+    public unsafe void ExamineTarget(uint objectId)
+    {
+        var obj = DalamudContext.ObjectCollection.FirstOrDefault(i => i.EntityId == objectId);
+        if (obj == null)
+        {
+            return;
+        }
+
+        try
+        {
+            AgentInspect.Instance()->ExamineCharacter(objectId);
+        }
+        catch (Exception ex)
+        {
+            DalamudContext.PluginLog.Error(ex, "Failed to examine target.");
+        }
+    }
 }
